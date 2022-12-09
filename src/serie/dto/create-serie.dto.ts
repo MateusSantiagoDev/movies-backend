@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateSerieDto {
   @ApiProperty({
     description: 'Titulo da serie',
-    example: 'Piratas do caribe',
+    example: 'O clube da meia noite',
   })
   title: string;
 
