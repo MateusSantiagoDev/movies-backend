@@ -34,3 +34,15 @@ model Movie {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 }
+
+model Serie {
+  id String @id @unique
+
+  title       String
+  description String
+  avaliation  Float
+  image       String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+}
