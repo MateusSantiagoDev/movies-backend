@@ -1,4 +1,4 @@
-export class Movie {
+export class MovieEntity {
   id: string;
   title: string;
   description: string;
