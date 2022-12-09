@@ -23,7 +23,7 @@ export class CreateUserDto {
     description: 'Idade',
     example: 32,
   })
-  idade: string;
+  idade: number;
 
   @ApiProperty({
     description: '',
