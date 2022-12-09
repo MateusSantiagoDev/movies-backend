@@ -10,7 +10,7 @@ async function bootstrap() {
     .setDescription('Aplicação de Filmes, Séries e Animes')
     .setVersion('1.0.0')
     .addTag('Status')
-    .addTag('Users')
+    .addTag('User')
     .addTag('profiles')
     .addTag('categoryOne')
     .addTag('categoryTwo')
