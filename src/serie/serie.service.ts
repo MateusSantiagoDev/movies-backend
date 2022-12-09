@@ -12,8 +12,8 @@ import { SerieRepository } from './serie.repository';
 export class SerieService {
   constructor(private readonly repository: SerieRepository) {}
   async create(dto: CreateSerieDto): Promise<SerieEntity> {
-    const movie: SerieEntity = { ...dto, id: randomUUID() };
-    const newMovie = await this.repository.create(movie);
+    const serie: SerieEntity = { ...dto, id: randomUUID() };
+    const newMovie = await this.repository.create(serie);
     if (!newMovie) {
       throw new Exceptions(Exception.UnprocessableEntityException);
     }
@@ -35,19 +35,19 @@ export class SerieService {
   async update(id: string, dto: UpdateSerieDto): Promise<SerieEntity> {
     await this.findOne(id);
     const data: Partial<SerieEntity> = { ...dto };
-    const movie = await this.repository.update(id, data);
-    if (!movie) {
+    const serie = await this.repository.update(id, data);
+    if (!serie) {
       throw new Exceptions(Exception.UnprocessableEntityException);
     }
-    return movie;
+    return serie;
   }
 
   async delete(id: string): Promise<SerieEntity> {
     await this.findOne(id);
-    const movie = await this.repository.delete(id);
-    if (!movie) {
+    const serie = await this.repository.delete(id);
+    if (!serie) {
       throw new Exceptions(Exception.UnprocessableEntityException);
     }
-    return movie;
+    return serie;
   }
 }

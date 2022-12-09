@@ -3,13 +3,13 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateAnimeDto {
   @ApiProperty({
     description: 'Titulo do anime',
-    example: 'Piratas do caribe',
+    example: 'Naruto',
   })
   title: string;
 
   @ApiProperty({
     description: 'Descrição do anime',
-    example: 'Anime de aventura',
+    example: 'Anime de luta e aventura',
   })
   description: string;
 

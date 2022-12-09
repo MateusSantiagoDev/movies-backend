@@ -16,7 +16,7 @@ import { AnimeEntity } from './entities/anime.entity';
 
 
 @ApiTags('anime')
-@Controller('movie')
+@Controller('anime')
 export class AnimeController {
   constructor(private readonly service: AnimeService) {}
 
