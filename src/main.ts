@@ -12,9 +12,9 @@ async function bootstrap() {
     .addTag('Status')
     .addTag('User')
     .addTag('profiles')
-    .addTag('categoryOne')
-    .addTag('categoryTwo')
-    .addTag('categoryThree')
+    .addTag('movie')
+    .addTag('serie')
+    .addTag('anime')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
