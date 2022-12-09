@@ -1,25 +1,63 @@
-import { Injectable } from "@nestjs/common";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { UpdateUserDto } from "./dto/update-user.dto";
-import { UserRepository } from "./user.repository";
+import { Injectable } from '@nestjs/common';
+import { randomUUID } from 'crypto';
+import { hash } from 'bcrypt';
+import { Exceptions } from 'src/utils/exceptions/exception.class';
+import { Exception } from 'src/utils/exceptions/exceptions';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UserEntity } from './entities/user-entity';
+import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
-    delete(id: string): Promise<import("./entities/user-entity").UserEntity> {
-        throw new Error("Method not implemented.");
-    }
-    update(id: string, dto: UpdateUserDto): Promise<import("./entities/user-entity").UserEntity> {
-        throw new Error("Method not implemented.");
-    }
-    findOne(id: string): Promise<import("./entities/user-entity").UserEntity> {
-        throw new Error("Method not implemented.");
-    }
-    findAll(): Promise<import("./entities/user-entity").UserEntity[]> {
-        throw new Error("Method not implemented.");
-    }
-    create(dto: CreateUserDto): Promise<import("./entities/user-entity").UserEntity> {
-        throw new Error("Method not implemented.");
-    }
-    constructor(private readonly repository: UserRepository) {}
+  constructor(private readonly repository: UserRepository) {}
 
+  async create(dto: CreateUserDto): Promise<UserEntity> {
+    if (dto.password != dto.confirmPassword) {
+      throw new Exceptions(
+        Exception.InvalidData,
+        'senha e confirmação da senha precisão ser iguais',
+      );
+    }
+
+    delete dto.confirmPassword;
+
+    const user: UserEntity = {
+      ...dto,
+      id: randomUUID(),
+      password: await hash(dto.password, 10),
+    };
+    return await this.repository.create(user);
+  }
+
+  async findAll(): Promise<UserEntity[]> {
+    return await this.repository.findAll();
+  }
+
+  async findOne(id: string): Promise<UserEntity> {
+    const unique = await this.repository.findOne(id);
+    if (!unique) {
+      throw new Exceptions(Exception.NotFoundData);
+    }
+    return unique;
+  }
+
+  async update(id: string, dto: UpdateUserDto): Promise<UserEntity> {
+    await this.findOne(id);
+    const data: Partial<UserEntity> = { ...dto };
+    const user = await this.repository.update(id, data);
+    if (!user) {
+      throw new Exceptions(Exception.UnprocessableEntityException);
+    }
+    return user;
+  }
+
+  async delete(id: string): Promise<UserEntity> {
+    await this.findOne(id);
+    const unique = await this.repository.delete(id);
+    if (!unique) {
+      throw new Exceptions(Exception.UnprocessableEntityException);
+    }
+    return unique;
+  }
 }
