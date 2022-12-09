@@ -27,7 +27,11 @@ export class UserService {
       id: randomUUID(),
       password: await hash(dto.password, 10),
     };
-    return await this.repository.create(user);
+    const newUser = await this.repository.create(user);
+    if (!newUser) {
+      throw new Exceptions(Exception.InvalidData);
+    }
+    return newUser;
   }
 
   async findAll(): Promise<UserEntity[]> {
@@ -44,6 +48,15 @@ export class UserService {
 
   async update(id: string, dto: UpdateUserDto): Promise<UserEntity> {
     await this.findOne(id);
+    if(dto.password) {
+        if(dto.password != dto.confirmPassword) {
+            throw new Exceptions(
+                Exception.InvalidData,
+                'senha e confirmação da senha precisão ser iguais',
+              );
+        }
+        delete dto.confirmPassword;
+    }
     const data: Partial<UserEntity> = { ...dto };
     const user = await this.repository.update(id, data);
     if (!user) {
