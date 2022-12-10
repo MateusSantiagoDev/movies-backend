@@ -5,7 +5,7 @@ import { SerieEntity } from 'src/serie/entities/serie.entity';
 export class ProfileEntity {
   id: string;
   userId: string;
-  movie: MovieEntity[];
-  serie: SerieEntity[];
-  anime: AnimeEntity[];
+  movie?: MovieEntity[];
+  serie?: SerieEntity[];
+  anime?: AnimeEntity[];
 }
