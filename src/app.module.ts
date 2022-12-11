@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
+import { AnimeModule } from './anime/anime.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserModule } from './users/user.module';
+import { MovieModule } from './movie/movie.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ProfilesModule } from './profiles/profiles.module';
-import { MovieModule } from './movie/movie.module';
 import { SerieModule } from './serie/serie.module';
-import { AnimeModule } from './anime/anime.module';
+import { UserModule } from './users/user.module';
+
 
 
 @Module({

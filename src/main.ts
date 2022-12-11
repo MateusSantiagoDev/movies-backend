@@ -18,12 +18,14 @@ async function bootstrap() {
     .setTitle('MovieFlix')
     .setDescription('Aplicação de Filmes, Séries e Animes')
     .setVersion('1.0.0')
-    .addTag('Status')
-    .addTag('User')
+    .addTag('status')
+    .addTag('auth')
+    .addTag('user')
     .addTag('profiles')
     .addTag('movie')
     .addTag('serie')
     .addTag('anime')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
