@@ -6,24 +6,35 @@ import { UserEntity } from './entities/user-entity';
 
 @Injectable()
 export class UserRepository {
+  private Select = {
+    id: true,
+    name: true,
+    cpf: false,
+    email: true,
+    idade: true,
+    role: true,
+    password: false,
+    createdAt: true,
+    updatedAt: true,
+  };
   constructor(private readonly prisma: PrismaService) {}
   async create(data: UserEntity): Promise<UserEntity> {
     try {
       return await this.prisma.user.create({ data });
     } catch (err) {
       throw new Exceptions(Exception.DatabaseException);
-    }    
+    }
   }
   async findAll(): Promise<UserEntity[]> {
     try {
-      return await this.prisma.user.findMany();
+      return await this.prisma.user.findMany({ select: this.Select });
     } catch (err) {
       throw new Exceptions(Exception.DatabaseException);
     }
   }
   async findOne(id: string): Promise<UserEntity> {
     try {
-      return await this.prisma.user.findFirstOrThrow({ where: { id } });
+      return await this.prisma.user.findFirstOrThrow({ where: { id }, select: this.Select });
     } catch (err) {
       throw new Exceptions(Exception.DatabaseException);
     }
