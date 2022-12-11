@@ -1,12 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString } from 'class-validator'
 
 export class CreateProfileDto {
+  @IsString()
   @ApiProperty({
     description: 'ID do usuário dono do perfil',
     example: 'cb638690-e48a-4377-b152-b12255e44ade',
   })
   userId: string;
 
+  @IsString()
   @ApiProperty({
     description: 'Lista de filmes que foram adicionados ao perfil',
     example:
@@ -14,6 +17,7 @@ export class CreateProfileDto {
   })
   movie: string[];
 
+  @IsString()
   @ApiProperty({
     description: 'Lista de series que foram adicionadas ao perfil',
     example:
@@ -21,6 +25,7 @@ export class CreateProfileDto {
   })
   serie: string[];
 
+  @IsString()
   @ApiProperty({
     description: 'Lista de animes que foram adicionados ao perfil',
     example:
