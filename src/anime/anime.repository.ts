@@ -10,11 +10,9 @@ export class AnimeRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data: AnimeEntity): Promise<AnimeEntity> {
-    try {
+
       return await this.prisma.anime.create({ data });
-    } catch (err) {
-      throw new Exceptions(Exception.DatabaseException);
-    }
+ 
   }
 
   async findAll(): Promise<AnimeEntity[]> {
@@ -29,7 +27,7 @@ export class AnimeRepository {
     try {
       return await this.prisma.anime.findFirstOrThrow({ where: { id } });
     } catch (err) {
-      throw new Exceptions(Exception.DatabaseException);
+      throw new Exceptions(Exception.DatabaseException)
     }
   }
 
