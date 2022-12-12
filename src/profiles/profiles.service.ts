@@ -31,7 +31,7 @@ export class ProfilesService {
         },
         anime: {
           connect: dto.anime.map((el) => ({
-            id: el,
+            id: el
           })),
         },
       };
