@@ -20,19 +20,19 @@ export class ProfilesService {
           },
         },
         movie: {
-          connect: dto.movie.map((el) => ({
-            id: el,
-          })),
+          connect: dto.movie.map((el) => {
+            return { id: el}
+          }),
         },
         serie: {
-          connect: dto.serie.map((el) => ({
-            id: el,
-          })),
+          connect: dto.serie.map((el) => {
+            return { id: el}
+          }),
         },
         anime: {
-          connect: dto.anime.map((el) => ({
-            id: el
-          })),
+          connect: dto.anime.map((el) => {
+            return { id: el}
+          }),
         },
       };
 
