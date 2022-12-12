@@ -11,42 +11,46 @@ import { MovieRepository } from './movie.repository';
 export class MovieService {
   constructor(private readonly repository: MovieRepository) {}
   async create(dto: CreateMovieDto): Promise<MovieEntity> {
-    const movie: MovieEntity = { ...dto, id: randomUUID() };
-    const newMovie = await this.repository.create(movie);
-    if (!newMovie) {
+    try {
+      const movie: MovieEntity = { ...dto, id: randomUUID() };
+      return await this.repository.create(movie);
+    } catch (err) {
       throw new Exceptions(Exception.UnprocessableEntityException);
     }
-    return newMovie;
   }
 
   async findAll(): Promise<MovieEntity[]> {
-    return await this.repository.findAll();
+    try {
+      return await this.repository.findAll();
+    } catch (err) {
+      throw new Exceptions(Exception.UnprocessableEntityException);
+    }
   }
 
   async findOne(id: string): Promise<MovieEntity> {
-    const unique = await this.repository.findOne(id);
-    if (!unique) {
-      throw new Exceptions(Exception.NotFoundData);
+    try {
+      return await this.repository.findOne(id);
+    } catch (err) {
+      throw new Exceptions(Exception.NotFoundException);
     }
-    return unique;
   }
 
   async update(id: string, dto: UpdateMovieDto): Promise<MovieEntity> {
-    await this.findOne(id);
-    const data: Partial<MovieEntity> = { ...dto };
-    const movie = await this.repository.update(id, data);
-    if (!movie) {
+    try {
+      await this.findOne(id);
+      const data: Partial<MovieEntity> = { ...dto };
+      return await this.repository.update(id, data);
+    } catch (err) {
       throw new Exceptions(Exception.UnprocessableEntityException);
     }
-    return movie;
   }
 
   async delete(id: string): Promise<MovieEntity> {
-    await this.findOne(id);
-    const movie = await this.repository.delete(id);
-    if (!movie) {
+    try {
+      await this.findOne(id);
+      return await this.repository.delete(id);
+    } catch (err) {
       throw new Exceptions(Exception.UnprocessableEntityException);
     }
-    return movie;
   }
 }
