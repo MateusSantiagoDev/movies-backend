@@ -1,7 +1,11 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { UserEntity } from 'src/users/entities/user-entity';
 import { exceptionhandling } from 'src/utils/exceptions/exceptionhandling';
 import { AuthService } from './auth.service';
+import { IsTeacherAuthorization } from './decorators/is.teacher.decorator';
+import { LoggedUser } from './decorators/user.logged.decorator';
 import { LoginDto } from './dto/login.dto';
 import { LoginResponseDto } from './dto/login.response.dto';
 
@@ -12,9 +16,9 @@ export class AuthController {
 
   
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({
+   @ApiOperation({
     summary: 'Login de usuário',
-  })
+  })  
   @Post()
   login(@Body() dto: LoginDto): Promise<LoginResponseDto> {
     try {
@@ -23,4 +27,16 @@ export class AuthController {
       exceptionhandling(err)
     }
   }
+
+  @ApiOperation({
+    summary: "Retorna o usuário que está autenticado"
+  })
+  @UseGuards(AuthGuard(), IsTeacherAuthorization)
+  @ApiBearerAuth()
+  @Get()  
+  profile(@LoggedUser() user: UserEntity) {
+    return user;
+  }
+  
 }
+

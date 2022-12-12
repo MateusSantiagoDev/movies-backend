@@ -24,6 +24,7 @@ export class AuthService {
 
     delete user.password;
     delete user.cpf;
+    delete user.role;
     
     return {
       token: this.jwt.sign({ email }),

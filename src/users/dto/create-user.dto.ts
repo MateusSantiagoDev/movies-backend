@@ -33,8 +33,7 @@ export class CreateUserDto {
 
   @IsString()
   @ApiProperty({
-    description: '',
-    example: '',
+    description: 'Permissão de acesso',
   })
   role: string;
 

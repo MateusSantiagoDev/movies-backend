@@ -21,7 +21,7 @@ export class UserService {
     }
 
     delete dto.confirmPassword;
-
+    
     const user: UserEntity = {
       ...dto,
       id: randomUUID(),

@@ -12,7 +12,7 @@ export class UserRepository {
     cpf: false,
     email: true,
     idade: true,
-    role: true,
+    role: false,
     password: false,
     createdAt: true,
     updatedAt: true,
