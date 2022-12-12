@@ -7,47 +7,50 @@ import { UpdateSerieDto } from './dto/update-serie.dto';
 import { SerieEntity } from './entities/serie.entity';
 import { SerieRepository } from './serie.repository';
 
-
 @Injectable()
 export class SerieService {
   constructor(private readonly repository: SerieRepository) {}
   async create(dto: CreateSerieDto): Promise<SerieEntity> {
-    const serie: SerieEntity = { ...dto, id: randomUUID() };
-    const newMovie = await this.repository.create(serie);
-    if (!newMovie) {
+    try {
+      const serie: SerieEntity = { ...dto, id: randomUUID() };
+      return await this.repository.create(serie);
+    } catch (err) {
       throw new Exceptions(Exception.UnprocessableEntityException);
     }
-    return newMovie;
   }
 
   async findAll(): Promise<SerieEntity[]> {
-    return await this.repository.findAll();
+    try {
+      return await this.repository.findAll();
+    } catch (err) {
+      throw new Exceptions(Exception.UnprocessableEntityException);
+    }
   }
 
   async findOne(id: string): Promise<SerieEntity> {
-    const unique = await this.repository.findOne(id);
-    if (!unique) {
-      throw new Exceptions(Exception.NotFoundData);
+    try {
+      return await this.repository.findOne(id);
+    } catch (err) {
+      throw new Exceptions(Exception.NotFoundException);
     }
-    return unique;
   }
 
   async update(id: string, dto: UpdateSerieDto): Promise<SerieEntity> {
-    await this.findOne(id);
-    const data: Partial<SerieEntity> = { ...dto };
-    const serie = await this.repository.update(id, data);
-    if (!serie) {
+    try {
+      await this.findOne(id);
+      const data: Partial<SerieEntity> = { ...dto };
+      return await this.repository.update(id, data);
+    } catch (err) {
       throw new Exceptions(Exception.UnprocessableEntityException);
     }
-    return serie;
   }
 
   async delete(id: string): Promise<SerieEntity> {
-    await this.findOne(id);
-    const serie = await this.repository.delete(id);
-    if (!serie) {
+    try {
+      await this.findOne(id);
+      return await this.repository.delete(id);
+    } catch (err) {
       throw new Exceptions(Exception.UnprocessableEntityException);
     }
-    return serie;
   }
 }
