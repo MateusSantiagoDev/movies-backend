@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator'
+import { IsArray, IsString } from 'class-validator';
 
 export class CreateProfileDto {
   @IsString()
@@ -9,7 +9,7 @@ export class CreateProfileDto {
   })
   userId: string;
 
-  @IsString()
+  @IsArray()
   @ApiProperty({
     description: 'Lista de filmes que foram adicionados ao perfil',
     example:
@@ -17,7 +17,7 @@ export class CreateProfileDto {
   })
   movie: string[];
 
-  @IsString()
+  @IsArray()
   @ApiProperty({
     description: 'Lista de series que foram adicionadas ao perfil',
     example:
@@ -25,7 +25,7 @@ export class CreateProfileDto {
   })
   serie: string[];
 
-  @IsString()
+  @IsArray()
   @ApiProperty({
     description: 'Lista de animes que foram adicionados ao perfil',
     example:

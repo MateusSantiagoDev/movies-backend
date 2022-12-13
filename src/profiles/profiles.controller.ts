@@ -27,9 +27,9 @@ export class ProfilesController {
     summary: 'Criar um perfil',
   })
   @Post()
-  create(@Body() dto: CreateProfileDto) {
+  async create(@Body() dto: CreateProfileDto) {
     try {
-      return this.service.create(dto);
+      return await this.service.create(dto);
     } catch (err) {
       exceptionhandling(err);
     }
@@ -39,9 +39,9 @@ export class ProfilesController {
     summary: 'Visualizar todos os perfils',
   })
   @Get()
-  findAll() {
+  async findAll() {
     try {
-      return this.service.findAll();
+      return await this.service.findAll();
     } catch (err) {
       exceptionhandling(err);
     }
@@ -51,9 +51,9 @@ export class ProfilesController {
     summary: 'Buscar um perfil pelo ID',
   })
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     try {
-      return this.service.findOne(id);
+      return await this.service.findOne(id);
     } catch (err) {
       exceptionhandling(err);
     }
@@ -63,9 +63,9 @@ export class ProfilesController {
     summary: 'Editar um perfil pelo ID',
   })
   @Patch(':id')
-  update(@Param('id') id: string, @Body() dto: UpdateProfileDto) {
+  async update(@Param('id') id: string, @Body() dto: UpdateProfileDto) {
     try {
-      return this.service.update(id, dto);
+      return await this.service.update(id, dto);
     } catch (err) {
       exceptionhandling(err);
     }
@@ -75,9 +75,9 @@ export class ProfilesController {
     summary: 'Deletar um perfil pelo ID',
   })
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  async delete(@Param('id') id: string) {
     try {
-      return this.service.delete(id);
+      return await this.service.delete(id);
     } catch (err) {
       exceptionhandling(err);
     }

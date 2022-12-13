@@ -10,7 +10,7 @@ import { UpdateProfileDto } from './dto/update-profile.dto';
 @Injectable()
 export class ProfilesService {
   constructor(private readonly prisma: PrismaService) {}
-  create(dto: CreateProfileDto) {
+  async create(dto: CreateProfileDto) {
     try {
       const data: Prisma.ProfilesCreateInput = {
         id: randomUUID(),
@@ -20,23 +20,17 @@ export class ProfilesService {
           },
         },
         movie: {
-          connect: dto.movie.map((el) => {
-            return { id: el}
-          }),
+          connect: dto.movie.map((el) => ({ id: el})),
         },
         serie: {
-          connect: dto.serie.map((el) => {
-            return { id: el}
-          }),
+          connect: dto.serie.map((el) => ({ id: el})),
         },
         anime: {
-          connect: dto.anime.map((el) => {
-            return { id: el}
-          }),
+          connect: dto.anime.map((el) => ({ id: el})),
         },
       };
 
-      return this.prisma.profiles.create({
+      return await this.prisma.profiles.create({
         data,
         select: {
           id: true,
@@ -67,9 +61,9 @@ export class ProfilesService {
     }
   }
 
-  findAll() {
+  async findAll() {
     try {
-      return this.prisma.profiles.findMany({
+      return await this.prisma.profiles.findMany({
         select: {
           id: true,
           user: {
@@ -110,9 +104,9 @@ export class ProfilesService {
     }
   }
 
-  findOne(id: string) {
+  async findOne(id: string) {
     try {
-      return this.prisma.profiles.findUnique({
+      return await this.prisma.profiles.findUnique({
         where: { id },
         include: {
           user: true,
@@ -126,35 +120,37 @@ export class ProfilesService {
     }
   }
 
-  update(id: string, dto: UpdateProfileDto) {
+  async update(id: string, dto: UpdateProfileDto) {
     try {
-      return this.prisma.profiles.update({
+      return await this.prisma.profiles.update({
         where: { id },
         data: {
-          movie: {
-            connect: dto.movie.map((el) => {
-              return { id: el };
-            }),
+          user: {
+            connect: {
+              id: dto.userId,
+            },
           },
+          movie: {
+            connect: dto.movie?.map((el) => ({ id: el  })),
+          },          
           serie: {
-            connect: dto.serie.map((el) => {
-              return { id: el };
-            }),
+            connect: dto.serie?.map((el) => ({ id: el  })),           
           },
           anime: {
-            connect: dto.anime.map((el) => {
-              return { id: el };
-            }),
+            connect: dto.anime?.map((el) => ({ id: el  })),           
           },
         },
+        include: {
+          movie: true, serie: true, anime: true,
+        }
       });
     } catch (err) {
       throw new Exceptions(Exception.DatabaseException);
     }
   }
-  delete(id: string) {
+  async delete(id: string) {
     try {
-      return this.prisma.profiles.delete({ where: { id } });
+      return await this.prisma.profiles.delete({ where: { id } });
     } catch (err) {
       throw new Exceptions(Exception.DatabaseException);
     }
