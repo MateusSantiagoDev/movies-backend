@@ -4,10 +4,10 @@ import { IsArray, IsString } from 'class-validator';
 export class CreateProfileDto {
   @IsString()
   @ApiProperty({
-    description: 'ID do usuário dono do perfil',
+    description: 'Email do usuário dono do perfil',
     example: 'cb638690-e48a-4377-b152-b12255e44ade',
   })
-  userId: string;
+  userEmail: string;
 
   @IsArray()
   @ApiProperty({
