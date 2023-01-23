@@ -5,7 +5,7 @@ export class CreateProfileDto {
   @IsString()
   @ApiProperty({
     description: 'Email do usuário dono do perfil',
-    example: 'cb638690-e48a-4377-b152-b12255e44ade',
+    example: 'usuario@usuario.com.br',
   })
   userEmail: string;
 
