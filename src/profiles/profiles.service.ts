@@ -16,7 +16,7 @@ export class ProfilesService {
         id: randomUUID(),
         user: {
           connect: {
-            email: dto.userEmail,
+            id: dto.userId,
           },
         },
         movie: {
@@ -127,7 +127,7 @@ export class ProfilesService {
         data: {
           user: {
             connect: {
-              email: dto.userEmail,
+              id: dto.userId,
             },
           },
           movie: {
