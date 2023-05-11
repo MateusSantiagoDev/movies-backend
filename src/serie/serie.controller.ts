@@ -12,13 +12,9 @@ import { SerieService } from './serie.service';
 import { CreateSerieDto } from './dto/create-serie.dto';
 import { UpdateSerieDto } from './dto/update-serie.dto';
 import { exceptionhandling } from 'src/utils/exceptions/exceptionhandling';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
-import { IsTeacherAuthorization } from 'src/auth/decorators/is.teacher.decorator';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('serie')
-@UseGuards(AuthGuard(), IsTeacherAuthorization)
-@ApiBearerAuth()
 @Controller('serie')
 export class SerieController {
   constructor(private readonly service: SerieService) {}

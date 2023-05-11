@@ -5,8 +5,10 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, { cors:  true });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+  app.enableCors();
+  
   app.set('trust proxy', 1);
 
   app.useGlobalPipes(
@@ -22,13 +24,11 @@ async function bootstrap() {
     .setDescription('Aplicação de Filmes, Séries e Animes')
     .setVersion('1.0.0')
     .addTag('status')
-    .addTag('auth')
     .addTag('user')
     .addTag('profiles')
     .addTag('movie')
     .addTag('serie')
     .addTag('anime')
-    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

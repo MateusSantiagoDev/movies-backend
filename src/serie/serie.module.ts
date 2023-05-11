@@ -3,10 +3,9 @@ import { SerieService } from './serie.service';
 import { SerieController } from './serie.controller';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { SerieRepository } from './serie.repository';
-import { PassportModule } from '@nestjs/passport';
 
 @Module({
-  imports: [PrismaModule, PassportModule.register({ defaultStrategy: 'jwt' }),],
+  imports: [PrismaModule],
   controllers: [SerieController],
   providers: [SerieService, SerieRepository],
 })

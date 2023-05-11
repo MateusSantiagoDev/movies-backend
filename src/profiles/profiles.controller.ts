@@ -11,14 +11,10 @@ import {
 import { ProfilesService } from './profiles.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { exceptionhandling } from 'src/utils/exceptions/exceptionhandling';
-import { AuthGuard } from '@nestjs/passport';
-import { IsTeacherAuthorization } from 'src/auth/decorators/is.teacher.decorator';
 
 @ApiTags('profiles')
-@UseGuards(AuthGuard(), IsTeacherAuthorization)
-@ApiBearerAuth()
 @Controller('profiles')
 export class ProfilesController {
   constructor(private readonly service: ProfilesService) {}

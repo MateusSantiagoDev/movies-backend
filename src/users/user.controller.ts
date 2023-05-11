@@ -1,5 +1,5 @@
-import { Controller } from '@nestjs/common';
 import {
+  Controller,
   Body,
   Delete,
   Get,
@@ -7,10 +7,8 @@ import {
   Patch,
   Post,
   UseGuards,
-} from '@nestjs/common/decorators';
-import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { IsTeacherAuthorization } from 'src/auth/decorators/is.teacher.decorator';
+} from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { exceptionhandling } from 'src/utils/exceptions/exceptionhandling';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -38,8 +36,6 @@ export class UserController {
     summary: 'Visualizar todos os usuários',
   })
   @Get()
-  @UseGuards(AuthGuard(), IsTeacherAuthorization)
-  @ApiBearerAuth()
   async findAll(): Promise<UserEntity[]> {
     try {
       return await this.service.findAll();
@@ -52,8 +48,6 @@ export class UserController {
     summary: 'Buscar um usuário pelo ID',
   })
   @Get(':id')
-  @UseGuards(AuthGuard(), IsTeacherAuthorization)
-  @ApiBearerAuth()
   async findOne(@Param('id') id: string): Promise<UserEntity> {
     try {
       return await this.service.findOne(id);
@@ -66,8 +60,6 @@ export class UserController {
     summary: 'Atualizar um usuário pelo ID',
   })
   @Patch(':id')
-  @UseGuards(AuthGuard(), IsTeacherAuthorization)
-  @ApiBearerAuth()
   async update(
     @Param('id') id: string,
     @Body() dto: UpdateUserDto,
@@ -83,8 +75,6 @@ export class UserController {
     summary: 'Remover um usuário pelo ID',
   })
   @Delete(':id')
-  @UseGuards(AuthGuard(), IsTeacherAuthorization)
-  @ApiBearerAuth()
   async delete(@Param('id') id: string): Promise<UserEntity> {
     try {
       return await this.service.delete(id);

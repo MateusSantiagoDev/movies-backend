@@ -8,9 +8,7 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { IsTeacherAuthorization } from 'src/auth/decorators/is.teacher.decorator';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { exceptionhandling } from 'src/utils/exceptions/exceptionhandling';
 import { AnimeService } from './anime.service';
 import { CreateAnimeDto } from './dto/create-anime.dto';
@@ -18,8 +16,6 @@ import { UpdateAnimeDto } from './dto/update-anime.dto';
 import { AnimeEntity } from './entities/anime.entity';
 
 @ApiTags('anime')
-@UseGuards(AuthGuard(), IsTeacherAuthorization)
-@ApiBearerAuth()
 @Controller('anime')
 export class AnimeController {
   constructor(private readonly service: AnimeService) {}
