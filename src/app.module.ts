@@ -4,7 +4,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MovieModule } from './movie/movie.module';
 import { PrismaModule } from './prisma/prisma.module';
-import { ProfilesModule } from './profiles/profiles.module';
 import { SerieModule } from './serie/serie.module';
 import { UserModule } from './users/user.module';
 
@@ -12,7 +11,6 @@ import { UserModule } from './users/user.module';
   imports: [
     UserModule,
     PrismaModule,
-    ProfilesModule,
     MovieModule,
     SerieModule,
     AnimeModule,
