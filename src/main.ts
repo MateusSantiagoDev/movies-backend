@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.enableCors();
-  
+
   app.set('trust proxy', 1);
 
   app.useGlobalPipes(
@@ -25,7 +25,6 @@ async function bootstrap() {
     .setVersion('1.0.0')
     .addTag('status')
     .addTag('user')
-    .addTag('profiles')
     .addTag('movie')
     .addTag('serie')
     .addTag('anime')

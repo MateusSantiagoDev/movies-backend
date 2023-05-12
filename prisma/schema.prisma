@@ -20,7 +20,6 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  profile Profiles[]
 
   @@map("user")
 }
@@ -36,7 +35,6 @@ model Movie {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  profile Profiles[]
 
   @@map("movie")
 }
@@ -52,7 +50,6 @@ model Serie {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  profile Profiles[]
 
   @@map("serie")
 }
@@ -68,21 +65,7 @@ model Anime {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  profile Profiles[]
 
   @@map("anime")
 }
 
-model Profiles {
-  id String @id @unique
-
-  user   User   @relation(fields: [userEmail], references: [email])
-  userEmail String @map("user_email")
-
-  movie Movie[]
-  serie Serie[]
-  anime Anime[]
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-}
